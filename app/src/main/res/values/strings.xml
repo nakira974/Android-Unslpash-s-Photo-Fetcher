@@ -19,35 +19,9 @@
     <string name="add_photo">Add Photo</string>
 
     <string name="photo1_name">Rose</string>
-    <string name="photo2_name">Freesia</string>
-    <string name="photo3_name">Lily</string>
-    <string name="photo4_name">Sunphoto</string>
-    <string name="photo5_name">Peony</string>
-    <string name="photo6_name">Daisy</string>
-    <string name="photo7_name">Lilac</string>
-    <string name="photo8_name">Marigold</string>
-    <string name="photo9_name">Poppy</string>
-    <string name="photo10_name">Daffodil</string>
-    <string name="photo11_name">Dahlia</string>
-    <string name="photo12_name">Tulip</string>
 
     <string name="photo1_description">Rose comes from the Latin word Rosa. There are over 100
         species of the rose. </string>
-    <string name="photo2_description">Freesias bloom during spring and are native to
-        Africa.</string>
-    <string name="photo3_description">Lilies have the longest in vase lifespan of any cut
-        bloom.</string>
-    <string name="photo4_description">Mature Sunphotos face east and are native too the United
-        States.</string>
-    <string name="photo5_description">Peony plants can live to be 100 years old.</string>
-    <string name="photo6_description">Daisies are cousins with Sunphotos.</string>
-    <string name="photo7_description">Lilacs belong to the olive family.</string>
-    <string name="photo8_description">Marigolds come in orange, reed, maroon and yellow.</string>
-    <string name="photo9_description">Poppies can be over 3 feet tall.</string>
-    <string name="photo10_description">Daffodils are referred to as Lent Lilies in England</string>
-    <string name="photo11_description">Dahlia is named after the Swedish botanist Anders
-        Dahl</string>
-    <string name="photo12_description">There are over 150 species of tulips.</string>
 
     <string name="photo_string">Photo</string>
     <string name="photo_finder">Photo finder</string>
