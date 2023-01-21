@@ -25,7 +25,7 @@ jobs:
         UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
       shell: bash
       run: |
-       mkdir -p ~/.gradle/
+       touch /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher/gradle.properties
        echo "GRADLE_USER_HOME=$HOME/.gradle" >> $GITHUB_ENV
        ls /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher
        echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher/gradle.properties  
