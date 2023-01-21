@@ -27,7 +27,7 @@ jobs:
       run: |
        mkdir -p ~/.gradle/
        echo "GRADLE_USER_HOME=$HOME/.gradle" >> $GITHUB_ENV
-       echo ls /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher
+       ls /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher
        echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher/gradle.properties  
        echo android.enableJetifier=true >/home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher/gradle.properties  
        echo android.useAndroidX=true > /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher/gradle.properties
