@@ -13,21 +13,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: set up JDK 11
-      uses: actions/setup-java@v3
+    - uses: actions/setup-java@v3
       with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: gradle
-
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+        distribution: temurin
+        java-version: 11
+        
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
       
     - name: Update API KEY from Secrets
       env:
         UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
       run: echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ./gradle.properties && echo android.enableJetifier=true > ./gradle.properties && echo android.useAndroidX=true > ./gradle.properties
-     
-        
-    - name: Build with Gradle
+    
+    - name: Execute Gradle build
       run: ./gradlew build
+      
+    
+     
