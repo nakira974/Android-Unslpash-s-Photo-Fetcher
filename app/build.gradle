@@ -14,7 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField("String", "UNSPLASH_API_KEY", UNSPLASH_API_KEY)
+        buildConfigField "String", "UNSPLASH_API_KEY", "\" UNSPLASH_API_KEY\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
