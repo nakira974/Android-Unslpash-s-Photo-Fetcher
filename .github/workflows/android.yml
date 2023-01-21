@@ -27,6 +27,8 @@ jobs:
       run: |
        mkdir -p ~/.gradle/
        echo "GRADLE_USER_HOME=$HOME/.gradle" >> $GITHUB_ENV
+       ls ~/.gradle/
+       echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY"
        echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ~/.gradle/gradle.properties  
        echo android.enableJetifier=true > ~/.gradle/gradle.properties  
        echo android.useAndroidX=true > ~/.gradle/gradle.properties
