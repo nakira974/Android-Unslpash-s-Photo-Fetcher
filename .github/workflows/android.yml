@@ -27,7 +27,7 @@ jobs:
       run: echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ./gradle.properties && echo android.enableJetifier=true > ./gradle.properties && echo android.useAndroidX=true > ./gradle.properties
     
     - name: Execute Gradle build
-      run: chmod+x ./gradlew && ./gradlew build
+      run: chmod + x ./gradlew && ./gradlew build
       
     
      
