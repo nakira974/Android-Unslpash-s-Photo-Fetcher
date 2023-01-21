@@ -27,11 +27,9 @@ jobs:
       run: |
        mkdir -p ~/.gradle/
        echo "GRADLE_USER_HOME=$HOME/.gradle" >> $GITHUB_ENV
-       ls ~/.gradle/
-       echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY"
-       echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ~/.gradle/gradle.properties  
-       echo android.enableJetifier=true > ~/.gradle/gradle.properties  
-       echo android.useAndroidX=true > ~/.gradle/gradle.properties
+       echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher/gradle.properties  
+       echo android.enableJetifier=true >/home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher/gradle.properties  
+       echo android.useAndroidX=true > /home/runner/work/Android-Unslpash-s-Photo-Fetcher/Android-Unslpash-s-Photo-Fetcher/gradle.properties
            
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
