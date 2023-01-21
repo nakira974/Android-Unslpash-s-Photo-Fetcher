@@ -22,5 +22,11 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+      
+    - name: Update API KEY from Secrets
+      env:
+        UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
+        run: echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ./gradle.properties
+        
     - name: Build with Gradle
       run: ./gradlew build
