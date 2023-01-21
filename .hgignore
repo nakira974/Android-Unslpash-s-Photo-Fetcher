@@ -1,0 +1,17 @@
+app/build/*
+build/*
+.gradle/*
+
+syntax: glob
+local.properties
+gradle.properties
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/.gitignore
+.idea/.name
+.idea/compiler.xml
+.idea/deploymentTargetDropDown.xml
+.idea/jarRepositories.xml
+.idea/misc.xml
+
+.hg/*

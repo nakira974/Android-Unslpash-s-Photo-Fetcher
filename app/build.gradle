@@ -1,0 +1,81 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.example.tpandroid"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField("String", "UNSPLASH_API_KEY", UNSPLASH_API_KEY)
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+}
+
+dependencies {
+    //Dependencies versions
+    def room_version = "2.4.3"
+    def picasso_version = "2.8"
+    def retrofit2_version = "2.9.0"
+
+    //Kotlin & Android dependencies
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
+
+    // RecyclerView dependencies
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+
+    // Material design dependencies
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+
+    // LiveData dependencies
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.liveDataVersion"
+    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'androidx.annotation:annotation:1.5.0'
+
+    //Room dependencies
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
+
+    //Retrofit dependencies
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+
+    //Picasso for URI into ImageView dependencies
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
+
+}
