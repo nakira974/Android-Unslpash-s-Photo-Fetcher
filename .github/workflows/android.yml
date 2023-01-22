@@ -27,7 +27,7 @@ jobs:
         UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
       shell: bash
       run: |
-       echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ./local.properties
+       run: echo UNSPLASH_API_KEY=\"$UNSPLASH_API_KEY\" > ./local.properties
        echo android.enableJetifier=true > ./gradle.properties
        echo android.useAndroidX=true >  ./gradle.properties
        
