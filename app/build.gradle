@@ -1,3 +1,5 @@
+
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -5,6 +7,12 @@ plugins {
 }
 
 android {
+    def propFile=rootProject.file("./local.properties")
+    def properties = new Properties()
+    properties.load(new FileInputStream(propFile))
+
+    def UNSPLASH_API_KEY = properties['UNSPLASH_API_KEY']
+
     compileSdkVersion 33
 
     defaultConfig {
