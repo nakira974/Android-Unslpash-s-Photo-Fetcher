@@ -27,10 +27,9 @@ jobs:
         UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
       shell: bash
       run: |
-       mkdir -p ~/.gradle/
-       run: echo UNSPLASH_API_KEY=\"$UNSPLASH_API_KEY\" > ~/.gradle/local.properties
-       echo android.enableJetifier=true > ~/.gradle/gradle.properties
-       echo android.useAndroidX=true >  ~/.gradle/gradle.properties
+       run: echo UNSPLASH_API_KEY=\"$UNSPLASH_API_KEY\" > ./local.properties
+       echo android.enableJetifier=true > ./gradle.properties
+       echo android.useAndroidX=true >  ./gradle.properties
        
     - name: Read package.json
       uses: juliangruber/read-file-action@v1
@@ -39,8 +38,7 @@ jobs:
     - name: Echo local.properties
       run: echo "${{ steps.package.outputs.content }}"
         
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+
     
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
