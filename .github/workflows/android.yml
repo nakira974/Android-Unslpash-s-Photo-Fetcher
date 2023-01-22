@@ -27,9 +27,10 @@ jobs:
         UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}
       shell: bash
       run: |
-       run: echo UNSPLASH_API_KEY=\"$UNSPLASH_API_KEY\" > ./local.properties
-       echo android.enableJetifier=true > ./gradle.properties
-       echo android.useAndroidX=true >  ./gradle.properties
+       mkdir -p ~/.gradle/
+       run: echo UNSPLASH_API_KEY=\"$UNSPLASH_API_KEY\" > ~/.gradle/local.properties
+       echo android.enableJetifier=true > ~/.gradle/gradle.properties
+       echo android.useAndroidX=true >  ~/.gradle/gradle.properties
        
     - name: Read package.json
       uses: juliangruber/read-file-action@v1
