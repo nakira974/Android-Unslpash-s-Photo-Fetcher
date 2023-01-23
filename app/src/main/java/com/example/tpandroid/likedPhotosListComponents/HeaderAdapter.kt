@@ -14,14 +14,13 @@ class HeaderAdapter : RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
 
     /* ViewHolder for displaying header. */
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val likedPhotoText : String = "Liked "
         private val photoNumberTextView: TextView = itemView.findViewById(R.id.flower_number_text)
         private var likedPhotoHeaderTextView  : TextView = itemView.findViewById(R.id.header_text)
         private var likedPhotoTextView  : TextView = itemView.findViewById(R.id.flower_text)
 
         fun bind(flowerCount: Int) {
             photoNumberTextView.text = flowerCount.toString()
-            likedPhotoHeaderTextView.text = likedPhotoText+"photos finder"
+            likedPhotoHeaderTextView.text = "Liked photos finder"
             likedPhotoTextView.text = "Liked photos"
         }
     }
