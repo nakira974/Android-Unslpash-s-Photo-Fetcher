@@ -12,7 +12,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         database =
-            Room.databaseBuilder(this, ApplicationDbContext::class.java, "recyclersample.dat")
+            Room.databaseBuilder(this, ApplicationDbContext::class.java, "photos.dat")
                 .build()
 
 

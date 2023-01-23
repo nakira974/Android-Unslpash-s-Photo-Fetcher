@@ -61,6 +61,7 @@ class FlowersListActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         /* Instantiates headerAdapter and flowersAdapter. Both adapters are added to concatAdapter.
@@ -78,10 +79,11 @@ class FlowersListActivity : AppCompatActivity() {
 
         val cleanDatabaseTask = _uiScope.launch(Dispatchers.Default) {
             semaphore.acquire()
+
             Room.databaseBuilder(
                 applicationContext,
                 ApplicationDbContext::class.java,
-                "recyclersample.dat"
+                "photos.dat"
             )
                 .fallbackToDestructiveMigration().build()
 
@@ -119,7 +121,7 @@ class FlowersListActivity : AppCompatActivity() {
                     it.urls!!.creator_name = it.user!!.name.toString()
                     it.urls!!.download_url = it.links!!.download.toString()
                     it.urls!!.image_id = it.id!!.toString()
-
+                    it.urls!!.image_byteArray = ByteArray(0)
                     App.database.photosRepository().insertAll(it.urls!!)
                 }
                 Log.println(
