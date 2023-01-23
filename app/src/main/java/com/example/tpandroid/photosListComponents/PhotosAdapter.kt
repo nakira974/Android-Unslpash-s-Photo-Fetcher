@@ -19,7 +19,7 @@ class PhotosAdapter(private val onClick: (Urls) -> Unit) :
     /* ViewHolder for Photo, takes in the inflated view and the onClick behavior. */
     class PhotoViewHolder(itemView: View, val onClick: (Urls) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
-        private val photoTextView: TextView = itemView.findViewById(R.id.flower_text)
+        private val photoTextView: TextView = itemView.findViewById(R.id.photo_text)
         private val photoImageView: ImageView = itemView.findViewById(R.id.flower_image)
         private var currentPhoto: Urls? = null
 
