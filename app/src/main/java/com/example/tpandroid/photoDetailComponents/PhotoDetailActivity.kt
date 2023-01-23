@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tpandroid.R
-import com.example.tpandroid.photoListComponents.FLOWER_ID
+import com.example.tpandroid.photosListComponents.FLOWER_ID
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

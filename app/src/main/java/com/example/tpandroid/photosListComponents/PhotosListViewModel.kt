@@ -1,4 +1,4 @@
-package com.example.tpandroid.photoListComponents
+package com.example.tpandroid.photosListComponents
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -14,6 +14,7 @@ class PhotosListViewModel(val dataSource: DataSource) : ViewModel() {
 
     val photosLiveData: Result<LiveData<List<Urls>>?>
         get() = dataSource.getPhotosList()
+
 }
 
 class PhotosListViewModelFactory(private val context: Context) : ViewModelProvider.Factory {

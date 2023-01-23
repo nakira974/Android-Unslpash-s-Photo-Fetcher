@@ -11,6 +11,9 @@ interface PhotosRepository {
     @Query("SELECT * FROM photos")
     fun getAll(): List<Urls>
 
+    @Query("SELECT * FROM photos WHERE is_cached = 1")
+    fun getAllLiked(): List<Urls>
+
     @Query("SELECT * FROM photos WHERE is_cached = 0")
     fun getAllUnCached(): List<Urls>
 

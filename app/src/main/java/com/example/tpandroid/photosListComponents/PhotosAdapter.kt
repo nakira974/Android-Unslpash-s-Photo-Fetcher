@@ -1,4 +1,4 @@
-package com.example.tpandroid.photoListComponents
+package com.example.tpandroid.photosListComponents
 
 import android.net.Uri
 import android.view.LayoutInflater

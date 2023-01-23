@@ -60,6 +60,37 @@ class DataSource(resources: Resources) {
     }
 
 
+    fun getLikedPhotosList(): Result<LiveData<List<Urls>>?> {
+        var likedPhotos: List<Urls>
+        var result: LiveData<List<Urls>>? = null
+
+        return try {
+            runBlocking {
+                val fetchDatabaseTask = _uiScope.launch(Dispatchers.IO) {
+                    Log.println(
+                        Log.DEBUG,
+                        "DATABASE",
+                        "LIKED PHOTOS LIST VIEW MODEL ENTER INTO DATABASE OPERATIONS THREAD"
+                    )
+                    likedPhotos = App.database.photosRepository().getAllLiked()
+                    result = MutableLiveData(likedPhotos)
+                    Log.println(Log.DEBUG, "DATABASE", "LIKED PHOTOS LIST VIEW FILLED")
+                }
+
+                fetchDatabaseTask.join()
+
+            }
+            Log.println(Log.DEBUG, "DATABASE", "LIKED PHOTOS LIST VIEW MODEL IS BACK INTO MAIN THREAD")
+
+            Result.success(result)
+
+        } catch (e: java.lang.Exception) {
+            Log.println(Log.WARN, "DATABASE", e.message.toString())
+            Result.failure(e)
+        }
+    }
+
+
     companion object {
         private var INSTANCE: DataSource? = null
 

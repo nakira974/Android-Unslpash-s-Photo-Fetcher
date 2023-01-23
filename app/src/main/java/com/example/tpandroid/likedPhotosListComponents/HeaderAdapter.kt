@@ -1,4 +1,4 @@
-package com.example.tpandroid.photoListComponents
+package com.example.tpandroid.likedPhotosListComponents
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +10,19 @@ import com.example.tpandroid.R
 /* A list always displaying one element: the number of flowers. */
 
 class HeaderAdapter : RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
-    private var photoCount: Int = 0
+    private var likedPhotoCount: Int = 0
 
     /* ViewHolder for displaying header. */
     class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val likedPhotoText : String = "Liked "
         private val photoNumberTextView: TextView = itemView.findViewById(R.id.flower_number_text)
+        private var likedPhotoHeaderTextView  : TextView = itemView.findViewById(R.id.header_text)
+        private var likedPhotoTextView  : TextView = itemView.findViewById(R.id.flower_text)
 
         fun bind(flowerCount: Int) {
             photoNumberTextView.text = flowerCount.toString()
+            likedPhotoHeaderTextView.text = likedPhotoText+"photos finder"
+            likedPhotoTextView.text = "Liked photos"
         }
     }
 
@@ -30,7 +35,7 @@ class HeaderAdapter : RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
 
     /* Binds number of photos to the header. */
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
-        holder.bind(photoCount)
+        holder.bind(likedPhotoCount)
     }
 
     /* Returns number of items, since there is only one item in the header return one  */
@@ -40,7 +45,7 @@ class HeaderAdapter : RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
 
     /* Updates header to display number of photos when a photo is added or subtracted. */
     fun updateFlowerCount(updatedPhotoCount: Int) {
-        photoCount = updatedPhotoCount
+        likedPhotoCount = updatedPhotoCount
         notifyDataSetChanged()
     }
 }

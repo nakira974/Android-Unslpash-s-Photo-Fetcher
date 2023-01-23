@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.example.tpandroid.photoListComponents.FlowersListActivity"
+            android:name="com.example.tpandroid.photosListComponents.PhotosListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,6 +38,7 @@
         </activity>
         <activity android:name="com.example.tpandroid.addPhoto.AddPhotoActivity" />
         <activity android:name="com.example.tpandroid.photoDetailComponents.PhotoDetailActivity" />
+        <activity android:name="com.example.tpandroid.likedPhotosListComponents.LikedPhotosListActivity" />
 
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.tpandroid.photoListComponents
+package com.example.tpandroid.photosListComponents
 
 import android.app.Activity
 import android.content.Intent
@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.tpandroid.*
 import com.example.tpandroid.addPhoto.AUTHOR_NAME
-import com.example.tpandroid.addPhoto.AddPhotoActivity
 import com.example.tpandroid.addPhoto.PHOTO_DESCRIPTION
 import com.example.tpandroid.data.Photo
 import com.example.tpandroid.data.Urls
+import com.example.tpandroid.likedPhotosListComponents.LikedPhotosListActivity
 import com.example.tpandroid.photoDetailComponents.PhotoDetailActivity
 import com.example.tpandroid.services.UnsplashPhotoService
 import kotlinx.coroutines.*
@@ -27,8 +27,8 @@ import java.util.*
 
 const val FLOWER_ID = "flower id"
 
-class FlowersListActivity : AppCompatActivity() {
-    private val newPhotoActivityRequestCode = 1
+class PhotosListActivity : AppCompatActivity() {
+    private val displayLikedPhotosListActivityCode = 1
     private val _viewModelJob = SupervisorJob()
     private val _uiScope = CoroutineScope(Dispatchers.Main + _viewModelJob)
 
@@ -170,15 +170,15 @@ class FlowersListActivity : AppCompatActivity() {
 
     /* Adds flower to flowerList when FAB is clicked. */
     private fun fabOnClick() {
-        val intent = Intent(this, AddPhotoActivity::class.java)
-        startActivityForResult(intent, newPhotoActivityRequestCode)
+        val intent = Intent(this, LikedPhotosListActivity::class.java)
+        startActivityForResult(intent, displayLikedPhotosListActivityCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
 
         /* Inserts flower into viewModel. */
-        if (requestCode == newPhotoActivityRequestCode && resultCode == Activity.RESULT_OK) {
+        if (requestCode == displayLikedPhotosListActivityCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
                 val photoAuthorName = data.getStringExtra(AUTHOR_NAME)
                 val photoDescription = data.getStringExtra(PHOTO_DESCRIPTION)
