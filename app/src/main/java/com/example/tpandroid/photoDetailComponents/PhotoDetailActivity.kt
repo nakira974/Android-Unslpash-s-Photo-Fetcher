@@ -1,5 +1,6 @@
 package com.example.tpandroid.photoDetailComponents
 
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 import java.util.*
 
 class PhotoDetailActivity : AppCompatActivity() {
@@ -55,7 +58,14 @@ class PhotoDetailActivity : AppCompatActivity() {
             }
             photoCreatorName.text = currentPhoto?.creator_name ?: UUID.randomUUID().toString()
             if (currentPhoto?.small!!.isNotEmpty()) {
-                Picasso.get().load(Uri.parse(currentPhoto.small)).into(photoImageView);
+                if(currentPhoto.is_cached){
+                    val inputStream : InputStream = ByteArrayInputStream(currentPhoto.image_byteArray);
+                    photoImageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    photoImageView.adjustViewBounds = true
+                    photoImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream))
+                }else
+                    Picasso.get().load(Uri.parse(currentPhoto.small)).into(photoImageView);
+
             } else {
                 Picasso.get()
                     .load(Uri.parse("https://i.insider.com/602ee9ced3ad27001837f2ac?width=700"))
