@@ -1,21 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-     Copyright (C) 2020 The Android Open Source Project
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-          http://www.apache.org/licenses/LICENSE-2.0
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
-
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".likedPhotosListComponents.LikedPhotosFragment">
 
     <TextView
         android:id="@+id/flower_detail_name"
@@ -25,22 +15,29 @@
         android:paddingBottom="24dp"
         android:text="@string/photo1_name"
         android:textAlignment="center"
-        android:textAppearance="?attr/textAppearanceHeadline3" />
+        android:textAppearance="?attr/textAppearanceHeadline3"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/flower_detail_image"
-        android:layout_width="320dp"
-        android:layout_height="320dp"
+        android:layout_width="323dp"
+        android:layout_height="303dp"
         android:layout_gravity="center"
         android:contentDescription="@string/photo_image_content_description"
-        app:srcCompat="@drawable/rose" />
+        app:srcCompat="@drawable/rose"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="115dp" />
 
     <TextView
         android:id="@+id/flower_detail_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="@string/photo1_description" />
+        android:text="@string/photo1_description"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="418dp" />
 
     <Button
         android:id="@+id/remove_button"
@@ -48,7 +45,10 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/remove_this_photo" />
+        android:text="@string/remove_this_photo"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="67dp"
+        tools:layout_editor_absoluteY="654dp" />
 
     <Button
         android:id="@+id/like_button"
@@ -58,7 +58,9 @@
         android:layout_gravity="center"
         android:backgroundTint="#E62768"
         android:text="@string/like_this_photo"
-        app:icon="@android:drawable/ic_menu_compass" />
+        app:icon="@android:drawable/ic_menu_compass"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="67dp"
+        tools:layout_editor_absoluteY="575dp" />
 
 </LinearLayout>
-

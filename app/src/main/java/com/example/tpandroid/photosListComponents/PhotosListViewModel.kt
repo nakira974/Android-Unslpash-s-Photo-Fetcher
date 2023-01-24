@@ -17,7 +17,7 @@ class PhotosListViewModel(val dataSource: DataSource) : ViewModel() {
 
 }
 
-class PhotosListViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class PhotosListViewModelFactory(val context: Context) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PhotosListViewModel::class.java)) {

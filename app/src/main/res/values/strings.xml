@@ -32,6 +32,10 @@
     <string name="photo_image_content_description">Image of the photo</string>
     <string name="remove_this_photo">Remove this photo</string>
     <string name="like_this_photo">Like this photo</string>
-    <string name="unlike_this_photo">Unlike this photo</string>
+    <string name="unlike_this_photo">Dislike this photo</string>
     <string name="photo_name_edit_text">photo name</string>
+    <string name="title_activity_navigation_bottom">NavigationBottomActivity</string>
+    <string name="title_navigation_photos_list">Randoms</string>
+    <string name="title_navigation_liked_photos_list">Favorites</string>
+    <string name="title_navigation_search_photos">Search</string>
 </resources>
