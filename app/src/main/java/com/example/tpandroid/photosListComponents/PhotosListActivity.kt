@@ -8,6 +8,10 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -16,9 +20,11 @@ import com.example.tpandroid.addPhoto.AUTHOR_NAME
 import com.example.tpandroid.addPhoto.PHOTO_DESCRIPTION
 import com.example.tpandroid.data.Photo
 import com.example.tpandroid.data.Urls
+import com.example.tpandroid.databinding.ActivityMainBinding
 import com.example.tpandroid.likedPhotosListComponents.LikedPhotosListActivity
 import com.example.tpandroid.photoDetailComponents.PhotoDetailActivity
 import com.example.tpandroid.services.UnsplashPhotoService
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Semaphore
 import retrofit2.Retrofit
@@ -31,6 +37,7 @@ class PhotosListActivity : AppCompatActivity() {
     private val displayLikedPhotosListActivityCode = 1
     private val _viewModelJob = SupervisorJob()
     private val _uiScope = CoroutineScope(Dispatchers.Main + _viewModelJob)
+    private lateinit var binding: ActivityMainBinding
 
     private val photosListViewModel by viewModels<PhotosListViewModel> {
         PhotosListViewModelFactory(this)
@@ -61,7 +68,35 @@ class PhotosListActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
+
+
+        try {
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+
+            val navView: BottomNavigationView = binding.navView
+
+            val navController = findNavController(R.id.nav_host_fragment_activity_navigation_bottom)
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            val appBarConfiguration = AppBarConfiguration(
+                setOf(
+                    R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                )
+            )
+
+            setupActionBarWithNavController(navController, appBarConfiguration)
+            navView.setupWithNavController(navController)
+
+        }catch (e : Exception){
+            Log.println(Log.ERROR, "NAV BAR", "INFLATE ERROR")
+            Log.println(Log.ERROR, "NAV BAR", e.message.toString())
+            Log.println(Log.ERROR, "NAV BAR", e.stackTrace.toString())
+
+        }
+
 
         /* Instantiates headerAdapter and flowersAdapter. Both adapters are added to concatAdapter.
         which displays the contents sequentially */

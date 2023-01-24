@@ -59,4 +59,6 @@
         android:backgroundTint="#E62768"
         android:text="@string/like_this_photo"
         app:icon="@android:drawable/ic_menu_compass" />
+
 </LinearLayout>
+

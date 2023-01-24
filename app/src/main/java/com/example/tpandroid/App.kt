@@ -1,6 +1,7 @@
 package com.example.tpandroid
 
 import android.app.Application
+import android.util.Log
 import androidx.room.Room
 
 class App : Application() {
@@ -14,7 +15,13 @@ class App : Application() {
         database =
             Room.databaseBuilder(this, ApplicationDbContext::class.java, "recyclersample.dat")
                 .build()
+        Log.println(Log.DEBUG, "DATABASE", "ROOM INSTANCE HAS BEEN CREATED")
+    }
 
+    override fun onTerminate() {
+        super.onTerminate()
+        database.close()
+        Log.println(Log.DEBUG, "DATABASE", "ROOM INSTANCE HAS BEEN DISPOSED")
 
     }
 
