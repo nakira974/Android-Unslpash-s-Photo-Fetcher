@@ -1,55 +1,53 @@
 package com.example.tpandroid.photosListComponents
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.tpandroid.*
-import com.example.tpandroid.addPhoto.AUTHOR_NAME
-import com.example.tpandroid.addPhoto.PHOTO_DESCRIPTION
 import com.example.tpandroid.data.Photo
 import com.example.tpandroid.data.Urls
-import com.example.tpandroid.databinding.ActivityMainBinding
-import com.example.tpandroid.likedPhotosListComponents.LikedPhotosListActivity
+import com.example.tpandroid.databinding.FragmentPhotosListBinding
 import com.example.tpandroid.photoDetailComponents.PhotoDetailActivity
 import com.example.tpandroid.services.UnsplashPhotoService
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Semaphore
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
-const val FLOWER_ID = "flower id"
+class PhotosListFragment: Fragment() {
+    private var _binding: FragmentPhotosListBinding? = null
 
-class PhotosListActivity : AppCompatActivity() {
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
     private val displayLikedPhotosListActivityCode = 1
     private val _viewModelJob = SupervisorJob()
     private val _uiScope = CoroutineScope(Dispatchers.Main + _viewModelJob)
-    private lateinit var binding: ActivityMainBinding
 
     private val photosListViewModel by viewModels<PhotosListViewModel> {
-        PhotosListViewModelFactory(this)
+        PhotosListViewModelFactory(this.requireContext())
     }
 
-    override fun onRestart() {
-        super.onRestart()
+
+    override fun onResume() {
+        super.onResume()
         val owner = this
         val headerAdapter = HeaderAdapter()
         val photosAdapter = PhotosAdapter { photo -> adapterOnClick(photo) }
         val concatAdapter = ConcatAdapter(headerAdapter, photosAdapter)
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        val recyclerView: RecyclerView = requireView().findViewById(R.id.photos_recycler_view)
         recyclerView.adapter = concatAdapter
         val photosLiveData: LiveData<List<Urls>>? = photosListViewModel.photosLiveData.getOrNull()
 
@@ -61,41 +59,16 @@ class PhotosListActivity : AppCompatActivity() {
         }
 
         Log.println(Log.DEBUG, "OBSERVER", "UPDATED")
-
     }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-    @OptIn(DelicateCoroutinesApi::class)
-    @Suppress("DEPRECATION")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        val rootView: View = inflater.inflate(R.layout.fragment_photos_list, container, false)
 
-        setContentView(R.layout.activity_main)
-
-
-        try {
-            binding = ActivityMainBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-
-            val navView: BottomNavigationView = binding.navView
-
-            val navController = findNavController(R.id.nav_host_fragment_activity_navigation_bottom)
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            val appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-                )
-            )
-
-            setupActionBarWithNavController(navController, appBarConfiguration)
-            navView.setupWithNavController(navController)
-
-        }catch (e : Exception){
-            Log.println(Log.ERROR, "NAV BAR", "INFLATE ERROR")
-            Log.println(Log.ERROR, "NAV BAR", e.message.toString())
-            Log.println(Log.ERROR, "NAV BAR", e.stackTrace.toString())
-
-        }
+        _binding = FragmentPhotosListBinding.inflate(inflater, container, false)
 
 
         /* Instantiates headerAdapter and flowersAdapter. Both adapters are added to concatAdapter.
@@ -104,17 +77,17 @@ class PhotosListActivity : AppCompatActivity() {
         val photosAdapter = PhotosAdapter { photo -> adapterOnClick(photo) }
         val concatAdapter = ConcatAdapter(headerAdapter, photosAdapter)
         var photosLiveData: LiveData<List<Urls>>? = null
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        val owner = this
+        val recyclerView: RecyclerView =rootView.findViewById(R.id.photos_recycler_view)
         recyclerView.adapter = concatAdapter
+        recyclerView.layoutManager = LinearLayoutManager(activity);
+
         var photos: List<Photo>? = emptyList()
         val semaphore = Semaphore(1)
-
 
         val cleanDatabaseTask = _uiScope.launch(Dispatchers.Default) {
             semaphore.acquire()
             Room.databaseBuilder(
-                applicationContext,
+                requireActivity().applicationContext,
                 ApplicationDbContext::class.java,
                 "recyclersample.dat"
             )
@@ -133,7 +106,7 @@ class PhotosListActivity : AppCompatActivity() {
             val service = retrofit.create(UnsplashPhotoService::class.java)
 
             val getRandomPhotosTask =
-                service.getRandomPhotos(token = BuildConfig.UNSPLASH_API_KEY)
+                service.getRandomPhotos(token = com.example.tpandroid.BuildConfig.UNSPLASH_API_KEY)
 
 
             photos = getRandomPhotosTask.execute().body()
@@ -175,7 +148,7 @@ class PhotosListActivity : AppCompatActivity() {
                 cleanDatabaseTask.join()
                 fillDataBaseTask.join()
             }
-            photosLiveData?.observe(owner) {
+            photosLiveData?.observe(viewLifecycleOwner) {
                 it?.let {
                     photosAdapter.submitList(it as MutableList<Urls>)
                     headerAdapter.updateFlowerCount(it.size)
@@ -184,43 +157,23 @@ class PhotosListActivity : AppCompatActivity() {
 
             Log.println(Log.DEBUG, "OBSERVER", "SET")
 
-            val fab: View = findViewById(R.id.fab)
-            fab.setOnClickListener {
-                fabOnClick()
-            }
-
         } catch (e: java.lang.Exception) {
             Log.println(Log.ERROR, "DATABASE", e.message.toString())
         }
 
-
+        return rootView
     }
 
-    /* Opens FlowerDetailActivity when RecyclerView item is clicked. */
+
     private fun adapterOnClick(photo: Urls) {
-        val intent = Intent(this, PhotoDetailActivity()::class.java)
-        intent.putExtra(FLOWER_ID, photo.id)
+        val intent = Intent(requireActivity(), PhotoDetailActivity()::class.java)
+        intent.putExtra(PHOTO_ID, photo.id)
         startActivity(intent)
     }
 
     /* Adds flower to flowerList when FAB is clicked. */
     private fun fabOnClick() {
-        val intent = Intent(this, LikedPhotosListActivity::class.java)
-        startActivityForResult(intent, displayLikedPhotosListActivityCode)
+        findNavController().navigate(R.id.navigation_liked_photos)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intentData)
-
-        /* Inserts flower into viewModel. */
-        if (requestCode == displayLikedPhotosListActivityCode && resultCode == Activity.RESULT_OK) {
-            intentData?.let { data ->
-                val photoAuthorName = data.getStringExtra(AUTHOR_NAME)
-                val photoDescription = data.getStringExtra(PHOTO_DESCRIPTION)
-
-                //TODO INSERT WITH DB
-                //photosListViewModel.insertFlower(flowerName, flowerDescription)
-            }
-        }
-    }
 }

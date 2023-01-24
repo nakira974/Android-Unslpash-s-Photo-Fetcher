@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".photosListComponents.PhotosListActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,6 @@
         </activity>
         <activity android:name=".addPhoto.AddPhotoActivity" />
         <activity android:name=".photoDetailComponents.PhotoDetailActivity" />
-        <activity android:name=".likedPhotosListComponents.LikedPhotosListActivity" />
     </application>
 
 </manifest>

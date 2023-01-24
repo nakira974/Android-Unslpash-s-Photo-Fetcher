@@ -35,7 +35,7 @@
     <string name="unlike_this_photo">Dislike this photo</string>
     <string name="photo_name_edit_text">photo name</string>
     <string name="title_activity_navigation_bottom">NavigationBottomActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_navigation_photos_list">Randoms</string>
+    <string name="title_navigation_liked_photos_list">Favorites</string>
+    <string name="title_navigation_search_photos">Search</string>
 </resources>

@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tpandroid.PHOTO_ID
 import com.example.tpandroid.R
-import com.example.tpandroid.photosListComponents.FLOWER_ID
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +40,7 @@ class PhotoDetailActivity : AppCompatActivity() {
 
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
-            currentPhotoId = bundle.getLong(FLOWER_ID)
+            currentPhotoId = bundle.getLong(PHOTO_ID)
         }
 
         /* If currentFlowerId is not null, get corresponding flower and set name, image and
