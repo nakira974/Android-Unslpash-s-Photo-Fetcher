@@ -25,7 +25,7 @@ jobs:
     - name: Restore Gradle user env && Update API KEY from Secrets
       shell: bash
       run: |
-       echo UNSPLASH_API_KEY="" > ./local.properties
+       echo UNSPLASH_API_KEY=""fake you"" > ./local.properties
        echo android.enableJetifier=true > ./gradle.properties
        echo android.useAndroidX=true >  ./gradle.properties
 
