@@ -29,8 +29,8 @@ interface PhotosRepository {
     @Query("SELECT is_cached FROM photos WHERE id = :id")
     fun findByIdIfCached(id: Int): Boolean
 
-    @Query("UPDATE photos SET is_cached = :is_cached WHERE id = :id")
-    fun setCachedById(id: Int, is_cached: Boolean)
+    @Query("UPDATE photos SET is_cached = :is_cached, image_byteArray = :image_byteArray WHERE id = :id")
+    fun setCachedById(id: Int, is_cached: Boolean,image_byteArray: ByteArray)
 
     @Insert
     fun insertAll(vararg flowers: Urls)

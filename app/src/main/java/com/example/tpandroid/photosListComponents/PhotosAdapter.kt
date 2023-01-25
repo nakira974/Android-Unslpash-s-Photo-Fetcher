@@ -1,5 +1,6 @@
 package com.example.tpandroid.photosListComponents
 
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tpandroid.R
 import com.example.tpandroid.data.Urls
 import com.squareup.picasso.Picasso
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 
 class PhotosAdapter(private val onClick: (Urls) -> Unit) :
     ListAdapter<Urls, PhotosAdapter.PhotoViewHolder>(PhotoDiffCallback) {
@@ -35,10 +38,16 @@ class PhotosAdapter(private val onClick: (Urls) -> Unit) :
         fun bind(photo: Urls) {
             currentPhoto = photo
 
-            //TODO Mettre la description de l'image en base et l'afficher ICI
             photoTextView.text = photo.creator_name
             if (photo.small!!.isNotEmpty()) {
-                Picasso.get().load(Uri.parse(photo.small)).into(photoImageView);
+                if(photo.is_cached){
+                    val inputStream : InputStream = ByteArrayInputStream(photo.image_byteArray);
+                    photoImageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    photoImageView.adjustViewBounds = true
+                    photoImageView.setImageBitmap(BitmapFactory.decodeStream(inputStream))
+                }else
+                    Picasso.get().load(Uri.parse(photo.small)).into(photoImageView);
+
             } else {
                 Picasso.get()
                     .load(Uri.parse("https://i.insider.com/602ee9ced3ad27001837f2ac?width=700"))

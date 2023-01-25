@@ -1,5 +1,6 @@
 package com.example.tpandroid.data
 
+import android.media.Image
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -30,5 +31,7 @@ data class Urls(
     @ColumnInfo(name = "image_id")
     var image_id: String = "",
     @ColumnInfo(name = "is_cached")
-    var is_cached: Boolean = false
+    var is_cached: Boolean = false,
+    @ColumnInfo(name="image_byteArray")
+    var image_byteArray : ByteArray
 )

@@ -1,6 +1,7 @@
 package com.example.tpandroid.photoDetailComponents
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,12 +11,14 @@ import com.example.tpandroid.data.DataSource
 import com.example.tpandroid.data.Photo
 import com.example.tpandroid.data.Urls
 import com.example.tpandroid.services.UnsplashPhotoService
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayOutputStream
 
 class PhotoDetailViewModel(private val datasource: DataSource) : ViewModel() {
 
@@ -83,7 +86,11 @@ class PhotoDetailViewModel(private val datasource: DataSource) : ViewModel() {
             runBlocking {
                 val selectEntityTask = _uiScope.launch(Dispatchers.IO) {
                     val id = photo.id;
-                    App.database.photosRepository().setCachedById(photo.id.toInt(), photo.is_cached)
+                    val bos = ByteArrayOutputStream()
+                    Picasso.get().load(photo.small).get().compress(Bitmap.CompressFormat.PNG, 100, bos)
+                    val bArray = bos.toByteArray()
+                    photo.image_byteArray = bArray;
+                    App.database.photosRepository().setCachedById(photo.id.toInt(), photo.is_cached, photo.image_byteArray)
                     when (photo.is_cached) {
                         true -> Log.println(Log.DEBUG, "DATABASE", "PHOTO ID:$id IS NOW PERSISTENT")
                         false -> Log.println(Log.DEBUG, "DATABASE", "PHOTO ID:$id IS NOW NO LONGER PERSISTENT")
