@@ -123,7 +123,7 @@ class PhotosListFragment: Fragment() {
             if (photos!!.isNotEmpty()) {
                 //On insère les URLS de la photo en base
                 photos!!.forEach() {
-                    it.urls!!.description = it.description.toString()
+                    it.urls!!.description = it.description ?: ""
                     it.urls!!.creator_name = it.user!!.name.toString()
                     it.urls!!.download_url = it.links!!.download.toString()
                     it.urls!!.image_id = it.id!!.toString()

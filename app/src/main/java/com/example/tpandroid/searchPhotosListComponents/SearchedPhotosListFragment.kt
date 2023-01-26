@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -19,6 +20,7 @@ import androidx.room.Room
 import com.example.tpandroid.*
 import com.example.tpandroid.data.Photo
 import com.example.tpandroid.data.Urls
+import com.example.tpandroid.data.search.SearchPhotos
 import com.example.tpandroid.databinding.FragmentPhotosListBinding
 import com.example.tpandroid.photoDetailComponents.PhotoDetailActivity
 import com.example.tpandroid.services.UnsplashPhotoService
@@ -64,103 +66,99 @@ class SearchedPhotosListFragment: Fragment() {
         try{
             val textInputLayout: TextInputLayout = rootView.findViewById(R.id.search_photo_text_layout)
             val textInputEditText: TextInputEditText = textInputLayout.findViewById(R.id.search_photos_text_input)
-            textInputEditText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable) {
-                    var photosLiveData: LiveData<List<Urls>>? = null
-                    var photos: List<Photo>? = emptyList()
-                    _userInput = s.toString()
-                    val semaphore = Semaphore(1)
-                    /* Instantiates headerAdapter and flowersAdapter. Both adapters are added to concatAdapter.
-       which displays the contents sequentially */
-                    val searchedPhotosListHeaderAdapter = SearchedPhotosListHeaderAdapter()
-                    val photosAdapter = PhotosAdapter { photo -> adapterOnClick(photo) }
-                    val concatAdapter = ConcatAdapter(searchedPhotosListHeaderAdapter, photosAdapter)
-                    val recyclerView: RecyclerView =rootView.findViewById(R.id.searched_photos_recycler_view)
-                    recyclerView.adapter = concatAdapter
-                    recyclerView.layoutManager = LinearLayoutManager(activity);
+            val validateButton : ImageButton = textInputLayout.findViewById(R.id.validate_button)
+            validateButton.setOnClickListener(){
+                var photosLiveData: LiveData<List<Urls>>? = null
+                var photos: SearchPhotos? = null
+                _userInput = textInputEditText.text.toString()
+                val semaphore = Semaphore(1)
+                /* Instantiates headerAdapter and flowersAdapter. Both adapters are added to concatAdapter.
+   which displays the contents sequentially */
+                val searchedPhotosListHeaderAdapter = SearchedPhotosListHeaderAdapter()
+                val photosAdapter = PhotosAdapter { photo -> adapterOnClick(photo) }
+                val concatAdapter = ConcatAdapter(searchedPhotosListHeaderAdapter, photosAdapter)
+                val recyclerView: RecyclerView =rootView.findViewById(R.id.searched_photos_recycler_view)
+                recyclerView.adapter = concatAdapter
+                recyclerView.layoutManager = LinearLayoutManager(activity);
 
-                    val cleanDatabaseTask = _uiScope.launch(Dispatchers.Default) {
-                        semaphore.acquire()
-                        Room.databaseBuilder(
-                            requireActivity().applicationContext,
-                            ApplicationDbContext::class.java,
-                            "recyclersample.dat"
-                        )
-                            .fallbackToDestructiveMigration().build()
+                val cleanDatabaseTask = _uiScope.launch(Dispatchers.Default) {
+                    semaphore.acquire()
+                    Room.databaseBuilder(
+                        requireActivity().applicationContext,
+                        ApplicationDbContext::class.java,
+                        "recyclersample.dat"
+                    )
+                        .fallbackToDestructiveMigration().build()
 
-                        App.database.photosRepository().getAllUnCached().forEach() {
-                            App.database.photosRepository().delete(it)
+                    App.database.photosRepository().getAllUnCached().forEach() {
+                        App.database.photosRepository().delete(it)
+                    }
+                    Log.println(Log.DEBUG, "DATABASE", "OLD SEARCHED PHOTOS URLS HAS BEEN CLEARED")
+
+                    val retrofit = Retrofit.Builder()
+                        .baseUrl("https://api.unsplash.com")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build()
+
+                    val service = retrofit.create(UnsplashPhotoService::class.java)
+
+                    val getRandomPhotosTask =
+                        service.getSearchPhotos(token = com.example.tpandroid.BuildConfig.UNSPLASH_API_KEY, _userInput)
+
+
+                    photos = getRandomPhotosTask.execute().body()
+                    Log.println(
+                        Log.DEBUG,
+                        "HTTP",
+                        "PHOTOS HAS BEEN FETCHED FROM https://api.unsplash.com/search/photos?query=$_userInput"
+                    )
+
+                    semaphore.release()
+                }
+                val fillDataBaseTask = _uiScope.launch(Dispatchers.Default) {
+                    semaphore.acquire()
+                    if (photos!!.results.isNotEmpty()) {
+                        //On insère les URLS de la photo en base
+                        photos!!.results.forEach() {
+                            it.urls.description = it.description ?: ""
+                            it.urls.creator_name = it.user.name
+                            it.urls.download_url = it.links.download
+                            it.urls.image_id = it.id
+                            it.urls.image_byteArray = ByteArray(0)
+
+                            App.database.photosRepository().insertAll(it.urls)
                         }
-                        Log.println(Log.DEBUG, "DATABASE", "OLD SEARCHED PHOTOS URLS HAS BEEN CLEARED")
-
-                        val retrofit = Retrofit.Builder()
-                            .baseUrl("https://api.unsplash.com")
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build()
-
-                        val service = retrofit.create(UnsplashPhotoService::class.java)
-
-                        val getRandomPhotosTask =
-                            service.getRandomPhotos(token = com.example.tpandroid.BuildConfig.UNSPLASH_API_KEY)
-
-
-                        photos = getRandomPhotosTask.execute().body()
                         Log.println(
                             Log.DEBUG,
-                            "HTTP",
-                            "PHOTOS HAS BEEN FETCHED FROM https://api.unsplash.com/photos/random?count=11&topics=nature"
+                            "DATABASE",
+                            "PHOTOS URLS HAS BEEN FILLED FROM SEARCHED PHOTOS"
                         )
+                        photosLiveData = photosListViewModel.photosLiveData.getOrNull()
 
-                        semaphore.release()
+
                     }
-                    val fillDataBaseTask = _uiScope.launch(Dispatchers.Default) {
-                        semaphore.acquire()
-                        if (photos!!.isNotEmpty()) {
-                            //On insère les URLS de la photo en base
-                            photos!!.forEach() {
-                                it.urls!!.description = it.description.toString()
-                                it.urls!!.creator_name = it.user!!.name.toString()
-                                it.urls!!.download_url = it.links!!.download.toString()
-                                it.urls!!.image_id = it.id!!.toString()
-                                it.urls!!.image_byteArray = ByteArray(0)
-
-                                App.database.photosRepository().insertAll(it.urls!!)
-                            }
-                            Log.println(
-                                Log.DEBUG,
-                                "DATABASE",
-                                "PHOTOS URLS HAS BEEN FILLED FROM SEARCHED PHOTOS"
-                            )
-                            photosLiveData = photosListViewModel.photosLiveData.getOrNull()
-
-
-                        }
-                        semaphore.release()
-                    }
-
-
-                    try {
-                        runBlocking {
-                            cleanDatabaseTask.join()
-                            fillDataBaseTask.join()
-                        }
-                        photosLiveData?.observe(viewLifecycleOwner) {
-                            it?.let {
-                                photosAdapter.submitList(it as MutableList<Urls>)
-                                searchedPhotosListHeaderAdapter.updateFlowerCount(it.size)
-                            }
-                        }
-
-                        Log.println(Log.DEBUG, "OBSERVER", "SET")
-
-                    } catch (e: java.lang.Exception) {
-                        Log.println(Log.ERROR, "DATABASE", e.message.toString())
-                    }
+                    semaphore.release()
                 }
 
-            })
+
+                try {
+                    runBlocking {
+                        cleanDatabaseTask.join()
+                        fillDataBaseTask.join()
+                    }
+                    photosLiveData?.observe(viewLifecycleOwner) {
+                        it?.let {
+                            photosAdapter.submitList(it as MutableList<Urls>)
+                            searchedPhotosListHeaderAdapter.updateFlowerCount(it.size)
+                        }
+                    }
+
+                    Log.println(Log.DEBUG, "OBSERVER", "SET")
+
+                } catch (e: java.lang.Exception) {
+                    Log.println(Log.ERROR, "DATABASE", e.message.toString())
+                }
+            }
 
         }catch (e : Exception){
             Log.println(Log.WARN, "SEARCHED_PHOTOS", "ERROR")

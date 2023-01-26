@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,17 +11,24 @@
         android:layout_height="match_parent"
         android:id="@+id/search_photo_text_layout">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/search_photos_text_input"
-        android:hint="@string/Nature" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_photos_text_input"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/Nature" />
+
+        <ImageButton
+            android:id="@+id/validate_button"
+            android:layout_width="44dp"
+            android:layout_height="53dp"
+            android:src="@android:drawable/ic_search_category_default" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searched_photos_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searched_photos_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
