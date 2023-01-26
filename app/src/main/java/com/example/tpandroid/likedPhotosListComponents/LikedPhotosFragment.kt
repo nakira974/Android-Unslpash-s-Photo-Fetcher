@@ -18,7 +18,7 @@ import com.example.tpandroid.R
 import com.example.tpandroid.data.Urls
 import com.example.tpandroid.databinding.FragmentPhotosListBinding
 import com.example.tpandroid.photoDetailComponents.PhotoDetailActivity
-import com.example.tpandroid.photosListComponents.PhotosAdapter
+import com.example.tpandroid.PhotosAdapter
 
 class LikedPhotosFragment : Fragment() {
 

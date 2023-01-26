@@ -9,7 +9,7 @@ import com.example.tpandroid.R
 
 /* A list always displaying one element: the number of flowers. */
 
-class HeaderAdapter : RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
+class PhotosListHeaderAdapter : RecyclerView.Adapter<PhotosListHeaderAdapter.HeaderViewHolder>() {
     private var photoCount: Int = 0
 
     /* ViewHolder for displaying header. */
