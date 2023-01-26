@@ -2,9 +2,10 @@ package com.example.tpandroid
 
 import android.app.Application
 import android.util.Log
+import androidx.multidex.MultiDexApplication
 import androidx.room.Room
 
-class App : Application() {
+class App : MultiDexApplication() {
 
     companion object {
         lateinit var database: ApplicationDbContext
