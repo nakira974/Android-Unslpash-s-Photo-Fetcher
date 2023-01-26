@@ -127,6 +127,7 @@ class PhotosListFragment: Fragment() {
                     it.urls!!.creator_name = it.user!!.name.toString()
                     it.urls!!.download_url = it.links!!.download.toString()
                     it.urls!!.image_id = it.id!!.toString()
+                    it.urls!!.image_byteArray = ByteArray(0)
 
                     App.database.photosRepository().insertAll(it.urls!!)
                 }
