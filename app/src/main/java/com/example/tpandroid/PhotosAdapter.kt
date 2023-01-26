@@ -1,4 +1,4 @@
-package com.example.tpandroid.photosListComponents
+package com.example.tpandroid
 
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tpandroid.R
 import com.example.tpandroid.data.Urls
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayInputStream

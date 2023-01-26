@@ -44,9 +44,9 @@ class PhotosListFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         val owner = this
-        val headerAdapter = HeaderAdapter()
+        val photosListHeaderAdapter = PhotosListHeaderAdapter()
         val photosAdapter = PhotosAdapter { photo -> adapterOnClick(photo) }
-        val concatAdapter = ConcatAdapter(headerAdapter, photosAdapter)
+        val concatAdapter = ConcatAdapter(photosListHeaderAdapter, photosAdapter)
         val recyclerView: RecyclerView = requireView().findViewById(R.id.photos_recycler_view)
         recyclerView.adapter = concatAdapter
         val photosLiveData: LiveData<List<Urls>>? = photosListViewModel.photosLiveData.getOrNull()
@@ -54,7 +54,7 @@ class PhotosListFragment: Fragment() {
         photosLiveData?.observe(owner) {
             it?.let {
                 photosAdapter.submitList(it as MutableList<Urls>)
-                headerAdapter.updateFlowerCount(it.size)
+                photosListHeaderAdapter.updateFlowerCount(it.size)
             }
         }
 
@@ -73,9 +73,9 @@ class PhotosListFragment: Fragment() {
 
         /* Instantiates headerAdapter and flowersAdapter. Both adapters are added to concatAdapter.
         which displays the contents sequentially */
-        val headerAdapter = HeaderAdapter()
+        val photosListHeaderAdapter = PhotosListHeaderAdapter()
         val photosAdapter = PhotosAdapter { photo -> adapterOnClick(photo) }
-        val concatAdapter = ConcatAdapter(headerAdapter, photosAdapter)
+        val concatAdapter = ConcatAdapter(photosListHeaderAdapter, photosAdapter)
         var photosLiveData: LiveData<List<Urls>>? = null
         val recyclerView: RecyclerView =rootView.findViewById(R.id.photos_recycler_view)
         recyclerView.adapter = concatAdapter
@@ -123,7 +123,7 @@ class PhotosListFragment: Fragment() {
             if (photos!!.isNotEmpty()) {
                 //On insère les URLS de la photo en base
                 photos!!.forEach() {
-                    it.urls!!.description = it.description.toString()
+                    it.urls!!.description = it.description ?: ""
                     it.urls!!.creator_name = it.user!!.name.toString()
                     it.urls!!.download_url = it.links!!.download.toString()
                     it.urls!!.image_id = it.id!!.toString()
@@ -152,7 +152,7 @@ class PhotosListFragment: Fragment() {
             photosLiveData?.observe(viewLifecycleOwner) {
                 it?.let {
                     photosAdapter.submitList(it as MutableList<Urls>)
-                    headerAdapter.updateFlowerCount(it.size)
+                    photosListHeaderAdapter.updateFlowerCount(it.size)
                 }
             }
 

@@ -17,12 +17,10 @@
         android:label="@string/title_navigation_liked_photos_list"
         tools:layout="@layout/fragment_photos_list" />
 
-    <!--
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.tpandroid.ui.notifications.NotificationsFragment"
+        android:name="com.example.tpandroid.searchPhotosListComponents.SearchedPhotosListFragment"
         android:label="@string/title_navigation_search_photos"
-        tools:layout="@layout/fragment_notifications" />
-    !-->
+        tools:layout="@layout/fragment_searched_photos_list" />
 
 </navigation>
