@@ -29,7 +29,7 @@ jobs:
        mkdir -p ~/.gradle/
        echo "GRADLE_USER_HOME=${HOME}/.gradle" >> $GITHUB_ENV
        echo "${GRADLE_PROPERTIES}" > ~/.gradle/gradle.properties
-       echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ~/.gradle/local.properties
+       echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ./local.properties
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
