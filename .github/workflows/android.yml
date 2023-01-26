@@ -30,6 +30,7 @@ jobs:
        echo UNSPLASH_API_KEY="$UNSPLASH_API_KEY" > ./local.properties
        echo android.enableJetifier=true > ./gradle.properties
        echo android.useAndroidX=true >  ./gradle.properties
+       echo org.gradle.jvmargs=-Xmx4608m > ./gradle.properties 
 
     - name: Read package.json
       uses: juliangruber/read-file-action@v1
