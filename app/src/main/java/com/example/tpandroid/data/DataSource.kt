@@ -41,7 +41,7 @@ class DataSource(resources: Resources) {
                         "DATABASE",
                         "PHOTOS LIST VIEW MODEL ENTER INTO DATABASE OPERATIONS THREAD"
                     )
-                    photos = App.database.photosRepository().getAll()
+                    photos = App.database.photosRepository().getAllUnCached()
                     result = MutableLiveData(photos)
                     Log.println(Log.DEBUG, "DATABASE", "PHOTOS LIST VIEW FILLED")
                 }
