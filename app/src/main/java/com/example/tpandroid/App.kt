@@ -9,7 +9,7 @@ class App : MultiDexApplication() {
 
     companion object {
         lateinit var database: ApplicationDbContext
-        const val databaseName : String = "photos.dat"
+        const val databaseName : String = "unslash_photos.dat"
     }
 
     override fun onCreate() {

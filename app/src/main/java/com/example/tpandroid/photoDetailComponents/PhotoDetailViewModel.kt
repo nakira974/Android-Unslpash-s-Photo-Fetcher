@@ -61,6 +61,8 @@ class PhotoDetailViewModel(private val datasource: DataSource) : ViewModel() {
         }
     }
 
+
+
     private fun isPhotoCached(photo: Urls): Boolean {
         var result = false
         try {
@@ -104,6 +106,8 @@ class PhotoDetailViewModel(private val datasource: DataSource) : ViewModel() {
         }
 
     }
+
+
 
     fun sendPhotoNotification(photo: Urls) {
         val retrofit = Retrofit.Builder()

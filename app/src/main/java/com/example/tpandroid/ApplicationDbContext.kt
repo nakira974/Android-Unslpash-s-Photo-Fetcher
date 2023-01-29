@@ -45,7 +45,18 @@ val MIGRATION_4_5 = object : Migration(4, 5) {
     }
 }
 
-@Database(entities = [Urls::class], version = 5)
+val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        val migrationTransactionQuery = "BEGIN TRANSACTION;\n" +
+                "ALTER TABLE `photo` ADD `like_number` INTEGER;\n" +
+                "COMMIT;\n"
+        database.execSQL(
+            migrationTransactionQuery
+        )
+    }
+}
+
+@Database(entities = [Urls::class], version = 6)
 public abstract class ApplicationDbContext : RoomDatabase() {
     abstract fun photosRepository(): PhotosRepository
 
