@@ -74,9 +74,8 @@ class SearchedPhotosListFragment: Fragment() {
                 val semaphore = Semaphore(1)
                 /* Instantiates headerAdapter and flowersAdapter. Both adapters are added to concatAdapter.
    which displays the contents sequentially */
-                val searchedPhotosListHeaderAdapter = SearchedPhotosListHeaderAdapter()
                 val photosAdapter = PhotosAdapter { photo -> adapterOnClick(photo) }
-                val concatAdapter = ConcatAdapter(searchedPhotosListHeaderAdapter, photosAdapter)
+                val concatAdapter = ConcatAdapter( photosAdapter)
                 val recyclerView: RecyclerView =rootView.findViewById(R.id.searched_photos_recycler_view)
                 recyclerView.adapter = concatAdapter
                 recyclerView.layoutManager = LinearLayoutManager(activity);
@@ -159,7 +158,6 @@ class SearchedPhotosListFragment: Fragment() {
                     photosLiveData?.observe(viewLifecycleOwner) {
                         it?.let {
                             photosAdapter.submitList(it as MutableList<Urls>)
-                            searchedPhotosListHeaderAdapter.updateFlowerCount(it.size)
                         }
                     }
 
