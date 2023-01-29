@@ -13,27 +13,35 @@ It have been made for a school project for my last engineer degree's year at Uni
 
 <p>
 
->Into your <u>gradle.properties</u> file, located at the project's root, create a registered value called : <b>UNSPLASH_API_KEY = "Bearer my_token_from_unsplash"</b>
+> Into your <u>gradle.properties</u> file, located at the project's root, create a registered value called : <b>UNSPLASH_API_KEY = "Bearer my_token_from_unsplash"</b>
 
+<b>Or</b>
 
->When you launch the app, the database clears all the entities that doesn't have their field 'is_cached' set at "true".
->Then with Retrofit2 we fetch 11 random photos, we store the urls with Sqlite and we can make it persist until we dislike the photo.
->Here's a global scheme of what are the steps to display the data that are stored into the database and then into the RecyclerView.
+> ```shell
+> cat UNSPLASH_API_KEY = "Bearer my_token_from_unsplash" > ./local.properties
+> ```
 
->![Data_Fetch_And_Save.drawio.png](Documentation%2FImages%2FData_Fetch_And_Save.drawio.png)
+> When you launch the app, likes number are updated for cached entities then in parallel the database clears all the entities that doesn't have their field 'is_cached' set at "true".
+> Finally with Retrofit2 we fetch 11 random photos from the Unsplash's API, we store the urls with Sqlite and we can make it persists until we dislike the photo.
+> Here's a global scheme of what are the steps to display the data that are stored into the database and then into the RecyclerView.
 
->When you launch the app you'll see the collection of images display into a RecyclerView
-> ![Screenshot_20230121_204009_com.example.tpandroid_edit_73394267759112.jpg](Documentation%2FImages%2FScreenshot_20230121_204009_com.example.tpandroid_edit_73394267759112.jpg)
+> ![Data_Fetch_And_Save.drawio.png](Documentation%2FImages%2FData_Fetch_And_Save.drawio.png)
 
->When you click on the row that you want you'll enter into the detail activity wich looks like that :
-> ![Screenshot_20230121_204034_com.example.tpandroid_edit_73463620315872.jpg](Documentation%2FImages%2FScreenshot_20230121_204034_com.example.tpandroid_edit_73463620315872.jpg)
+> When you launch the app you'll see the collection of images display into a RecyclerView
+> <img alt="Screenshot_20230129_142659_com.example.tpandroid.jpg" src="Documentation/Images/v2/Screenshot_20230129_142659_com.example.tpandroid.jpg" title="Launch screen"/>
 
->You can like/dislike a photo by clicking on the like button, it'll send again with Retrofit2 a POST/DELETE message to the Unsplash's API :
-> ![Screenshot_20230121_204100_com.example.tpandroid_edit_73506530389303.jpg](Documentation%2FImages%2FScreenshot_20230121_204100_com.example.tpandroid_edit_73506530389303.jpg)
+> When you click on the row that you want you'll enter into the detail activity wich looks like that :
+> ![Screenshot_20230129_142739_com.example.tpandroid.jpg](Documentation/Images/v2/Screenshot_20230129_142739_com.example.tpandroid.jpg)
 
->You can delete any entry, it'll erase them from the database :
+> You can like/dislike a photo by clicking on the "like/dislike" button, it'll send again with Retrofit2 a POST/DELETE message to the Unsplash's API :
+> When you like a photo, the download_url is used to fetch image byte array in the small format and store it therein a sqlite BLOB to displays 
+> it natively instead of using its uri with Picasso. 
+> It'll also permit without network to show these registered photos and access to the detail. 
+
+> You can also delete any entry, it'll erase them from the database :
 > ![Screenshot_20230121_204128_com.example.tpandroid_edit_73519934276280.jpg](Documentation%2FImages%2FScreenshot_20230121_204128_com.example.tpandroid_edit_73519934276280.jpg)
 
->Photos that are liked are saved at each new launch :
-> ![Screenshot_20230121_204144_com.example.tpandroid_edit_73535648220549.jpg](Documentation%2FImages%2FScreenshot_20230121_204144_com.example.tpandroid_edit_73535648220549.jpg)
+> Photos that are liked are saved at each new launch, and you can find into the "favorites" tab :
+> <img alt="Screenshot_20230129_142731_com.example.tpandroid.jpg" src="Documentation/Images/v2/Screenshot_20230129_142731_com.example.tpandroid.jpg" title="Favorites tab"/>
+> 
 </p>
