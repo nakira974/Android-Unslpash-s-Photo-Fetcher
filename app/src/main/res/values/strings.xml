@@ -38,5 +38,6 @@
     <string name="title_navigation_photos_list">Randoms</string>
     <string name="title_navigation_liked_photos_list">Favorites</string>
     <string name="title_navigation_search_photos">Search</string>
-    <string name="Nature">hint</string>
+    <string name="Nature">Which type photos would you like to see today ?</string>
+    <string name="search_button_text">Search</string>
 </resources>
