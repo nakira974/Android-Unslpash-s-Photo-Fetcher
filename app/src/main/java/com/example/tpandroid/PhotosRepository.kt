@@ -40,4 +40,7 @@ interface PhotosRepository {
 
     @Query("DELETE FROM photos WHERE id = :id")
     fun deleteById(id: Int)
+
+    @Query("UPDATE photos SET like_number = :like_number  WHERE id = :id")
+    fun updateLikesById(id: Int, like_number : Int)
 }

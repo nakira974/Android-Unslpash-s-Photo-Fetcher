@@ -26,4 +26,10 @@ interface UnsplashPhotoService {
         @Header("Authorization") token: String,
         @Path("image_id") image_id: String
     ): Call<Photo>
+
+    @GET("/photos/{image_id}")
+    fun getPhotoLikes(
+        @Header("Authorization") token: String,
+        @Path("image_id") image_id: String
+    ): Call<Photo>
 }
