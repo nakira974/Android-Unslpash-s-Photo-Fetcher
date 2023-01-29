@@ -38,6 +38,9 @@ It have been made for a school project for my last engineer degree's year at Uni
 > it natively instead of using its uri with Picasso. 
 > It'll also permit without network to show these registered photos and access to the detail. 
 
+> You can search specific photos instead of random ones :
+> ![Screenshot_20230129_142724_com.example.tpandroid.jpg](Documentation%2FImages%2Fv2%2FScreenshot_20230129_142724_com.example.tpandroid.jpg)
+
 > You can also delete any entry, it'll erase them from the database :
 > ![Screenshot_20230121_204128_com.example.tpandroid_edit_73519934276280.jpg](Documentation%2FImages%2FScreenshot_20230121_204128_com.example.tpandroid_edit_73519934276280.jpg)
 
