@@ -33,5 +33,7 @@ data class Urls(
     @ColumnInfo(name = "is_cached")
     var is_cached: Boolean = false,
     @ColumnInfo(name="image_byteArray")
-    var image_byteArray : ByteArray
+    var image_byteArray : ByteArray,
+    @ColumnInfo(name="like_number")
+    var like_number : Int
 )
