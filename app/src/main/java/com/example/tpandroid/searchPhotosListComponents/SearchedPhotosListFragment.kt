@@ -86,7 +86,7 @@ class SearchedPhotosListFragment: Fragment() {
                     Room.databaseBuilder(
                         requireActivity().applicationContext,
                         ApplicationDbContext::class.java,
-                        "recyclersample.dat"
+                        App.databaseName
                     )
                         .fallbackToDestructiveMigration().build()
 
@@ -106,12 +106,22 @@ class SearchedPhotosListFragment: Fragment() {
                         service.getSearchPhotos(token = com.example.tpandroid.BuildConfig.UNSPLASH_API_KEY, _userInput)
 
 
-                    photos = getRandomPhotosTask.execute().body()
-                    Log.println(
-                        Log.DEBUG,
-                        "HTTP",
-                        "PHOTOS HAS BEEN FETCHED FROM https://api.unsplash.com/search/photos?query=$_userInput"
-                    )
+                    try{
+                        photos = getRandomPhotosTask.execute().body()
+                        Log.println(
+                            Log.DEBUG,
+                            "HTTP",
+                            "PHOTOS HAS BEEN FETCHED FROM https://api.unsplash.com/search/photos?query=$_userInput"
+                        )
+                    }catch(ex : Exception){
+                        photos = SearchPhotos(emptyList(), 0, 0)
+                        Log.println(
+                            Log.ERROR,
+                            "HTTP",
+                            "PHOTOS HAS NOT BEEN FETCHED FROM https://api.unsplash.com/search/photos?query=$_userInput"
+                        )
+                    }
+
 
                     semaphore.release()
                 }
@@ -125,7 +135,7 @@ class SearchedPhotosListFragment: Fragment() {
                             it.urls.download_url = it.links.download
                             it.urls.image_id = it.id
                             it.urls.image_byteArray = ByteArray(0)
-
+                            it.urls.like_number = it.likes
                             App.database.photosRepository().insertAll(it.urls)
                         }
                         Log.println(

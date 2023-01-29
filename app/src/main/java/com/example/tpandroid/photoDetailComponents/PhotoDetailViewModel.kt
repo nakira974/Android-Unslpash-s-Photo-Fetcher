@@ -3,6 +3,7 @@ package com.example.tpandroid.photoDetailComponents
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.tpandroid.App
@@ -90,7 +91,7 @@ class PhotoDetailViewModel(private val datasource: DataSource) : ViewModel() {
                     Picasso.get().load(photo.small).get().compress(Bitmap.CompressFormat.PNG, 100, bos)
                     val bArray = bos.toByteArray()
                     photo.image_byteArray = bArray;
-                    App.database.photosRepository().setCachedById(photo.id.toInt(), photo.is_cached, photo.image_byteArray)
+                    App.database.photosRepository().setCachedById(photo.id.toInt(), photo.is_cached, photo.image_byteArray, photo.like_number)
                     when (photo.is_cached) {
                         true -> Log.println(Log.DEBUG, "DATABASE", "PHOTO ID:$id IS NOW PERSISTENT")
                         false -> Log.println(Log.DEBUG, "DATABASE", "PHOTO ID:$id IS NOW NO LONGER PERSISTENT")
@@ -115,10 +116,12 @@ class PhotoDetailViewModel(private val datasource: DataSource) : ViewModel() {
         sendNotificationTask = when (isPhotoCached(photo)) {
             true -> {
                 photo.is_cached = false
+                photo.like_number--
                 service.deleteLikePhoto(token = BuildConfig.UNSPLASH_API_KEY, imageId)
             }
             false -> {
                 photo.is_cached = true
+                photo.like_number++
                 service.postLikePhoto(token = BuildConfig.UNSPLASH_API_KEY, imageId)
             }
         }

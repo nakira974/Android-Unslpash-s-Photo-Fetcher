@@ -36,11 +36,17 @@
         app:srcCompat="@drawable/rose" />
 
     <TextView
-        android:id="@+id/flower_detail_description"
+        android:id="@+id/photo_detail_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/photo1_description" />
+
+    <TextView
+        android:id="@+id/photo_likes_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp" />
 
     <Button
         android:id="@+id/remove_button"
@@ -59,6 +65,8 @@
         android:backgroundTint="#E62768"
         android:text="@string/like_this_photo"
         app:icon="@android:drawable/ic_menu_compass" />
+
+
 
 </LinearLayout>
 

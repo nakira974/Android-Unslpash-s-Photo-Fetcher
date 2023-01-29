@@ -37,9 +37,10 @@ class PhotoDetailActivity : AppCompatActivity() {
         /* Connect variables to UI elements. */
         val photoCreatorName: TextView = findViewById(R.id.flower_detail_name)
         val photoImageView: ImageView = findViewById(R.id.flower_detail_image)
-        val photoDescription: TextView = findViewById(R.id.flower_detail_description)
+        val photoDescription: TextView = findViewById(R.id.photo_detail_description)
         val removePhotoButton: Button = findViewById(R.id.remove_button)
         val likePhotoButton: Button = findViewById(R.id.like_button)
+        val likesNumberTextView : TextView = findViewById(R.id.photo_likes_number)
 
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
@@ -52,6 +53,8 @@ class PhotoDetailActivity : AppCompatActivity() {
 
 
             val currentPhoto = photoDetailViewModel.getPhotoForId(it)
+            likesNumberTextView.text = currentPhoto!!.like_number.toString()+" likes"
+
             when (currentPhoto!!.is_cached) {
                 true -> likePhotoButton.text = getString(R.string.unlike_this_photo)
                 false -> likePhotoButton.text = getString(R.string.like_this_photo)

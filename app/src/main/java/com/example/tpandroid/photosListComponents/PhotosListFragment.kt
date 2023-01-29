@@ -89,7 +89,7 @@ class PhotosListFragment: Fragment() {
             Room.databaseBuilder(
                 requireActivity().applicationContext,
                 ApplicationDbContext::class.java,
-                "recyclersample.dat"
+                App.databaseName
             )
                 .fallbackToDestructiveMigration().build()
 
@@ -109,12 +109,19 @@ class PhotosListFragment: Fragment() {
                 service.getRandomPhotos(token = com.example.tpandroid.BuildConfig.UNSPLASH_API_KEY)
 
 
-            photos = getRandomPhotosTask.execute().body()
-            Log.println(
-                Log.DEBUG,
-                "HTTP",
-                "PHOTOS HAS BEEN FETCHED FROM https://api.unsplash.com/photos/random?count=11&topics=nature"
-            )
+            try{
+                photos = getRandomPhotosTask.execute().body()
+                Log.println(
+                    Log.DEBUG,
+                    "HTTP",
+                    "PHOTOS HAS BEEN FETCHED FROM https://api.unsplash.com/photos/random?count=11&topics=nature"
+                )
+            }catch (ex : Exception){
+                photos = emptyList()
+                Log.println(Log.ERROR, "HTTP",
+                    "PHOTOS HAS NOT BEEN FETCHED FROM https://api.unsplash.com/photos/random?count=11&topics=nature")
+            }
+
 
             semaphore.release()
         }
@@ -128,7 +135,7 @@ class PhotosListFragment: Fragment() {
                     it.urls!!.download_url = it.links!!.download.toString()
                     it.urls!!.image_id = it.id!!.toString()
                     it.urls!!.image_byteArray = ByteArray(0)
-
+                    it.urls!!.like_number = it.likes
                     App.database.photosRepository().insertAll(it.urls!!)
                 }
                 Log.println(

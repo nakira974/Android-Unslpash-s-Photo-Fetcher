@@ -9,12 +9,13 @@ class App : MultiDexApplication() {
 
     companion object {
         lateinit var database: ApplicationDbContext
+        const val databaseName : String = "photos.dat"
     }
 
     override fun onCreate() {
         super.onCreate()
         database =
-            Room.databaseBuilder(this, ApplicationDbContext::class.java, "photos.dat")
+            Room.databaseBuilder(this, ApplicationDbContext::class.java, databaseName)
                 .build()
         Log.println(Log.DEBUG, "DATABASE", "ROOM INSTANCE HAS BEEN CREATED")
     }
