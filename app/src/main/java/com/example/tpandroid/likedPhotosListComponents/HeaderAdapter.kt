@@ -20,7 +20,7 @@ class HeaderAdapter : RecyclerView.Adapter<HeaderAdapter.HeaderViewHolder>() {
 
         fun bind(likedPhotosCount: Int) {
             photoNumberTextView.text = likedPhotosCount.toString()
-            likedPhotoHeaderTextView.text = "Liked photos finder"
+            likedPhotoHeaderTextView.text = "Favorites finder"
             likedPhotoTextView.text = "Liked photos"
         }
     }
